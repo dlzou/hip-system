@@ -1,0 +1,5 @@
+conda install -yc numpy opencv matplotlib tqdm pillow ipython
+conda install -yc conda-forge scikit-image pycocotools tensorboard
+conda install -yc spyder-ide spyder-line-profiler
+conda install -yc pytorch torchvision
+conda install -yc conda-forge protobuf
