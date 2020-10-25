@@ -3,6 +3,14 @@ from os import listdir
 from os.path import join, isfile
 
 
+"""
+Generate new dataset from COCO that only has labels for desired classes.
+A rather simplistic and slow solution, but it works.
+
+Also must change a line in dataset.py for the labels/ directory.
+"""
+
+
 def convert(data_dir, new_dir, filename, labels):
     out = ''
     with open(join(data_dir, filename), 'r') as f:
@@ -19,7 +27,7 @@ def convert(data_dir, new_dir, filename, labels):
 if __name__ == '__main__':
     data_dir = sys.argv[1]
     new_dir = sys.argv[2]
-    labels = [int(i) for i in sys.argv[3:]]
+    labels = sys.argv[3:]
 
     label_files = [filename for filename in listdir(data_dir) if isfile(join(data_dir, filename))]
     for f in label_files:
