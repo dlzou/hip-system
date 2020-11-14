@@ -17,4 +17,4 @@ The Wireless Communication module is responsible for relaying important informat
 ### *Warning Module*
 This the module that provides onboard warning to the user if a baby or pet is detected in a passenger seat. When an appropriate signal is received from the image processing module, this module's microcontroller, in our case the Arduino, would notify the CAN Communication module to turn on the air conditioning, roll down the car window, and honk the horns. In addition, the alarm, in our prototype, the ultra bright LED and buzzer will go off, flashing and buzzing in quick successions.
 
-![HIP Schematic](Images/HIP_Schematic_schem.png)
+!(Images/HIP_Schematic_schem.png)
