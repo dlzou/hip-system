@@ -16,5 +16,3 @@ The Image Processing module determines whether the object detected by the Enviro
 The Wireless Communication module is responsible for relaying important informations such as temperature, passenger status etc. to the mobile interface. In our prototype, the mobile interface is connected to the system via Bluetooth, which is done using a BLE module connected to the Raspberry Pi.
 ### *Warning Module*
 This the module that provides onboard warning to the user if a baby or pet is detected in a passenger seat. When an appropriate signal is received from the image processing module, this module's microcontroller, in our case the Arduino, would notify the CAN Communication module to turn on the air conditioning, roll down the car window, and honk the horns. In addition, the alarm, in our prototype, the ultra bright LED and buzzer will go off, flashing and buzzing in quick successions.
-
-!(Images/HIP_Schematic_schem.png)
