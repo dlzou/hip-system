@@ -8,3 +8,4 @@ __pycache__/
 
 # Configs
 .vscode/
+.dir-locals.el
