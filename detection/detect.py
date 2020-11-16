@@ -32,6 +32,7 @@ def detect(save_img=False):
         shutil.rmtree(out)  # delete output folder
     os.makedirs(out)  # make new output folder
     half = device.type != 'cpu'  # half precision only supported on CUDA
+    transmit_next = transmitter()
 
     # Load model
     model = attempt_load(weights, map_location=device)  # load FP32 model
@@ -52,7 +53,6 @@ def detect(save_img=False):
         view_img = True
         cudnn.benchmark = True  # set True to speed up constant image size inference
         dataset = LoadStreams(source, img_size=imgsz)
-        transmit_next = transmitter()
     else:
         save_img = True
         dataset = LoadImages(source, img_size=imgsz)
@@ -101,10 +101,13 @@ def detect(save_img=False):
 
                 # Print results
                 for c in det[:, -1].unique():
-                    n = (det[:, -1] == c).sum()  # detections per class
-                    s += '%g %ss, ' % (n, names[int(c)])  # add to string
+                    # n = (det[:, -1] == c).sum()  # detections per class
+                    # s += '%g %ss, ' % (n, names[int(c)])  # add to string
+
+                    # lazy hack for hip-system
                     if  names[int(c)] == 'person':
-                        transmit_next(1 if n > 0 else 0) # lazy hack for hip-system
+                        n = (det[:, -1] == c).sum()  # detections per class
+                        transmit_next(1 if n > 0 else 0)
 
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
@@ -114,8 +117,13 @@ def detect(save_img=False):
                             f.write(('%g ' * 5 + '\n') % (cls, *xywh))  # label format
 
                     if save_img or view_img:  # Add bbox to image
-                        label = '%s %.2f' % (names[int(cls)], conf)
-                        plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=3)
+                        # label = '%s %.2f' % (names[int(cls)], conf)
+                        # plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=3)
+
+                        # lazy hack part 2
+                        if names[int(cls)] == 'person':
+                            label = '%s %.2f' % (names[int(cls)], conf)
+                            plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=3)
 
             # Print time (inference + NMS)
             # print('%sDone. (%.3fs)' % (s, t2 - t1))
